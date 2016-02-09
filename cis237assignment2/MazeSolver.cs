@@ -46,6 +46,13 @@ namespace cis237assignment2
             this.yStart = yStart;
 
             //Do work needed to use mazeTraversal recursive call and solve the maze.
+
+            //basically I would first want to check if there is a '#' on the left, if not change pointer to there.
+
+            if (xStart - 1 == '#')
+            {
+                // set new xstart to the new one
+            }
         }
 
 
