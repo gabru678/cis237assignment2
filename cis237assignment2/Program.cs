@@ -28,7 +28,8 @@ namespace cis237assignment2
             /// You don't have to, but it might make your life easier.
             /// </summary>
             char[,] maze1 = 
-            { { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
+            { 
+            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
             { '#', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '#' },
             { '#', '.', '#', '.', '#', '.', '#', '#', '#', '#', '.', '#' },
             { '#', '#', '#', '.', '#', '.', '.', '.', '.', '#', '.', '#' },
@@ -39,7 +40,8 @@ namespace cis237assignment2
             { '#', '.', '.', '.', '.', '.', '.', '.', '.', '#', '.', '#' },
             { '#', '#', '#', '#', '#', '#', '.', '#', '#', '#', '.', '#' },
             { '#', '.', '.', '.', '.', '.', '.', '#', '.', '.', '.', '#' },
-            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' } };
+            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' }
+            };
 
             /// <summary>
             /// Create a new instance of a mazeSolver.
@@ -77,9 +79,21 @@ namespace cis237assignment2
         /// <returns>transposedMaze</returns>
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
-            //Write code her to create a transposed maze.
+            int x = 1;
+            int y =1;
+            //Write code here to create a transposed maze.
+            char[,] maze3 = new char[12, 12];
 
-            return new char[1, 1];
+
+            for (int j = 0; j < 12; j++)
+            {
+                for (int r = 0; r < 12; r++)
+                    Console.Write("{0} ", maze3[r, j]);
+
+                Console.WriteLine();
+            }
+
+            return maze3;
         }
     }
 }
