@@ -79,8 +79,6 @@ namespace cis237assignment2
         /// <returns>transposedMaze</returns>
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
-            int x = 1;
-            int y =1;
             //Write code here to create a transposed maze.
             char[,] maze3 = new char[12, 12];
 
@@ -88,7 +86,7 @@ namespace cis237assignment2
             for (int j = 0; j < 12; j++)
             {
                 for (int r = 0; r < 12; r++)
-                    Console.Write("{0} ", maze3[r, j]);
+                    maze3[r, j] = mazeToTranspose[j, r];
 
                 Console.WriteLine();
             }

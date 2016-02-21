@@ -20,10 +20,9 @@ namespace cis237assignment2
         char[,] maze;
         int xStart;
         int yStart;
-        bool solve;
 
-        // declare and instatiate a Maze Printer
-        mazePrinter printing = new mazePrinter();
+        // Variable for if the maze has been solved or not
+        bool solve;
 
         /// <summary>
         /// Default Constuctor to setup a new maze solver.
@@ -48,6 +47,7 @@ namespace cis237assignment2
             this.maze = maze;
             this.xStart = xStart;
             this.yStart = yStart;
+
             this.solve = false;
 
             //Do work needed to use mazeTraversal recursive call and solve the maze.
@@ -57,11 +57,7 @@ namespace cis237assignment2
             // Then Print out the solved maze ( if not done with the recursive method
             // Ask Teacher if we would print out the maze EVERY iteration?
             //mazePrinter(this.maze);
-
-            //// call the ui class again to ask what to do
-            //// or just print it out
-            //console.writeline("press a button to exit?");
-
+            
         }
 
 
@@ -72,26 +68,24 @@ namespace cis237assignment2
         /// </summary>
         private void mazeTraversal(char[,] maze, int x, int y)
         {
-            // declare and instatiate a Maze Printer
-            mazePrinter printOut = new mazePrinter();
-
-            printOut.printing(maze);
+            this.printing(maze);
             
-            //Implement maze traversal recursive call
             
             // Establish the maze and where we are beginning as a point
             char current = this.maze[x, y];
+            maze[x,y] = 'X';
 
             // Now do a bunch of cases on what would happen
 
             //First I should check if where I'm at is valid
             // otherwise I should drop an x
             // Assuming its not already a # (wall)
-            if (current == '.')
-            {
-                this.maze[x, y] = 'X';
-                printOut.printing(maze);
-            }
+            //if (current == '.')
+            //{
+            //    this.maze[x, y] = 'X';
+            //    printOut.printing(maze);
+            //    this.solve = true;
+            //}
             //If its a wall or an O we would exit the loop
             //if (current == '#' || current == 'X')
             //{
@@ -100,64 +94,101 @@ namespace cis237assignment2
             //}
 
             //basically I would first want to check if there is a '#' below, if not change pointer to there.
-            if (maze[x, y - 1] == '.')
+            if (maze[x,y-1] == '.')
             {
                 if (solve == false)
                 {
                     // And shouldnt I make current = 'O' before I exit the loop
                     // by declaring it here?
                     this.maze[x, y] = 'X';
+                    this.printing(maze);
                     mazeTraversal(maze, x, y - 1);
 
                     if (solve == false)
                     {
                         this.maze[x, y - 1] = 'O';
+                        this.printing(maze);
                     }
                 }
+            }
 
                 // How should I be calling the multiple ones?
-                if (maze[x, y - 1] == '.')
+                // like this:
+            // This one is to move Left
+            if (maze[x-1,y] == '.')
+            {
+                if (solve == false)
                 {
                     // this one is if not left move forward
                     // How would I check if the forward one isnt a #
                     // Isnt that the one handled by the default in the recursive call?
-                    this.maze[x, y] = 'X';
-                    mazeTraversal(maze, x, y + 1);
-                }
+                    this.maze[x,y] = 'X';
+                    this.printing(maze);
+                    mazeTraversal(maze, x -1, y);
 
-                if (maze[x, y - 1] == '.')
+                    if (solve == false)
+                    {
+                        this.maze[x-1, y] = 'O';
+                        this.printing(maze);
+                    }
+                }
+            }
+
+            // This one is to move Right
+            if (maze[x+1,y] == '.')
+            {
+                if (solve == false)
                 {
                     // This one is to move right
                     // Assuming the previous idea of recalling the correct method works
                     this.maze[x, y] = 'X';
-                    mazeTraversal(maze, x + 1, y);
-                }
+                    this.printing(maze);
+                    mazeTraversal(maze, x+1, y);
 
-                if (maze[x, y - 1] == '.')
-                {
-                    // This one is to move back
-                    // This would be a last resort
-                    this.maze[x, y] = 'X';
-                    mazeTraversal(maze, x - 1, y);
+                    if (solve == false)
+                    {
+                        this.maze[x, y - 1] = 'O';
+                        this.printing(maze);
+                    }
                 }
+            }
+            
+            //// This one would be to move up
+            //if (maze[x,y+1] == '.')
+            //{
+            //    if (solve == false)
+            //    {
+            //        this.maze[x, y] = 'X';
+            //        this.printing(maze);
+            //        mazeTraversal(maze, x, y+1);
 
-                // This would be if we knew we were done
+            //        if (solve == false)
+            //        {
+            //            this.maze[x, y + 1] = 'O';
+            //            this.printing(maze);
+            //        }
+            //    }
+            //}
+
+            // This would be if we knew we were done
+            // This is done my saying that if they reached an outside wall in any axis
+            // either X or Y that they would have reacehd the end of the maze
                 if (maze.GetLength(0) - 1 == x)
                 {
-                    // This one woudl be assuiming there are no moves left
+                    // This one would be assuiming there are no moves left
                     // Would use the damn printArray method to print it out
                     // and tell the user that we are done
                     Console.WriteLine(" Congrats! \n The maze is completed and your path is below");
                     this.maze[x - 1, y] = 'X';
                     Console.ReadLine();
-                    printOut.printing(maze);
+                    this.printing(maze);
                 }
 
                 if (maze.GetLength(1) - 1 == y)
                 {
                     Console.WriteLine(" Congrats! \n The maze is completed and your path is below");
                     this.maze[x, y - 1] = 'O';
-                    printOut.printing(maze);
+                    this.printing(maze);
                     Console.ReadLine();
 
                 }
@@ -166,7 +197,7 @@ namespace cis237assignment2
                 {
                     Console.WriteLine(" Congrats! \n The maze is completed and your path is below");
                     this.maze[x, y] = 'O';
-                    printOut.printing(maze);
+                    this.printing(maze);
                     Console.ReadLine();
                 }
 
@@ -174,11 +205,32 @@ namespace cis237assignment2
                 {
                     Console.WriteLine(" Congrats! \n The maze is completed and your path is below");
                     this.maze[x, y] = 'O';
-                    printOut.printing(maze);
+                    this.printing(maze);
                     Console.ReadLine();
                 }
                 //This is the end of the Maze recursive call to traverse the maze
             }
+        private string printing(char[,] arr){
+        
+            // Would having the declaration of a return string, to be the later modified
+            // even need to be declared here?
+            string returnString = "";
+
+        int rowLength = arr.GetLength(0);
+        int colLength = arr.GetLength(1);
+
+        for (int i = 0; i < rowLength; i++)
+        {
+            for (int j = 0; j < colLength; j++)
+            {
+                //Console.Write(string.Format("{0} ", arr[i, j]));
+                returnString += maze[i, j];
+            }
+            returnString += Environment.NewLine;
+        }
+        return returnString;
+        }
+
         }
     }
-}
+
